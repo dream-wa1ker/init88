@@ -1,3 +1,4 @@
+
 0000000000001139 <lolcat>:
     1139:	55                   	push   rbp
     113a:	48 89 e5             	mov    rbp,rsp
@@ -5,8 +6,19 @@
     1141:	48 8b 45 f8          	mov    rax,QWORD PTR [rbp-0x8]
     1145:	8b 00                	mov    eax,DWORD PTR [rax]
     1147:	83 f8 0a             	cmp    eax,0xa
+
+As far as I have learnt, the above instruction does the following : 
+
+- evaluates the value eax - 10, and then if it equals zero, then sets the ZF flag to 1. Else if it is less than 0, it sets the SF flag to 1, else it sets both the flags to 0. 
+
     114a:	75 07                	jne    1153 <lolcat+0x1a>
+
+The jmp operation does the following : if the ZF flag is not 1, that is the previous instruction did not set the ZF flag to 1, that is in this context, the cmp did not set the  ZF to 1, i.e, either the result is negative or positive and not zero, then the instruction pointer is redirected to the instruction starting at the relative address 1153, that is the start of the lolcat function. 
+
     114c:	b8 00 00 00 00       	mov    eax,0x0
+
+Zeros the rax/eax register before jumping to the lolcat function address 1158 relative to the rip. 
+
     1151:	eb 05                	jmp    1158 <lolcat+0x1f>
     1153:	b8 01 00 00 00       	mov    eax,0x1
     1158:	5d                   	pop    rbp
